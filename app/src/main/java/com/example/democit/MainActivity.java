@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         hello = findViewById(R.id.hello);
 
-        hello.setText(data.myName);
+
 
 
         send = findViewById(R.id.button);
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         input = findViewById(R.id.name);
 
         send.setOnClickListener(this);
-
+        hello.setText(data.myName);
     }
 
     @Override
