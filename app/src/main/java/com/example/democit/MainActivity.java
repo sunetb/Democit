@@ -25,9 +25,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         hello = findViewById(R.id.hello);
 
-
-
-
         send = findViewById(R.id.button);
 
         input = findViewById(R.id.name);
@@ -38,8 +35,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        data.myName = input.getText().toString();
-        hello.setText("Good morning "+ data.myName);
+        data.myName = "Good morning "+ input.getText().toString();
+        hello.setText(data.myName);
 
 
         System.out.println(input.getText().toString());
