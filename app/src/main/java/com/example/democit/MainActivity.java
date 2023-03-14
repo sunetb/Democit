@@ -2,7 +2,10 @@ package com.example.democit;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,12 +24,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     TextView hello;
 
-    Button send;
+    Button send, newAct;
 
     EditText input;
 
     MyDataSingleton data = MyDataSingleton.getInstance();
 
+    SharedPreferences storage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,30 +39,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         hello = findViewById(R.id.hello);
 
         send = findViewById(R.id.button);
-
+        newAct = findViewById(R.id.button2);
         input = findViewById(R.id.name);
 
         send.setOnClickListener(this);
+        newAct.setOnClickListener(this);
         hello.setText(data.myName);
+
+        storage = PreferenceManager.getDefaultSharedPreferences(this);
+
+        //save some text
+        String name = "sune";
+        storage.edit().putString("username",name).commit();
+
     }
 
     @Override
     public void onClick(View view) {
+        if (view == newAct){
+            Intent i = new Intent(this, MyNewActivity.class);
+            startActivity(i);
+        }
+        else{
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    data.myName = readURL("https://raw.githubusercontent.com/sunetb/U/master/greeting.txt");//"Good morning "+ input.getText().toString();
 
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                data.myName = readURL("https://raw.githubusercontent.com/sunetb/U/master/greeting.txt");//"Good morning "+ input.getText().toString();
-
-            }
-        });
-        t.start();
-        hello.setText(data.myName);
+                }
+            });
+            t.start();
+            hello.setText(data.myName);
 
 
-
-        System.out.println(input.getText().toString());
-
+            System.out.println(input.getText().toString());
+        }
 
     }
 
